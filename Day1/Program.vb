@@ -33,12 +33,14 @@ Module Program
         End While
 
         Dim calculator As New DistanceCalculator()
-
         Dim total = calculator.CalculateDistance(leftList, rightList)
+        Console.WriteLine($"Distance: {total}")
 
-        Console.WriteLine(total)
-
+        Dim similarityCalculator As New SimilarityCalculator()
+        Dim similarity = similarityCalculator.CalculateSimilarity(leftList, rightList)
+        Console.WriteLine($"Similarity {similarity}", similarity)
         fileReader.Close()
+
 
     End Sub
 End Module
