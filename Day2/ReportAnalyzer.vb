@@ -1,9 +1,12 @@
 ﻿Public Class ReportAnalyzer
 
-    Public Function GetNumberOfSafeReports(reports As List(Of List(Of Integer))) As Integer
+    Private _tolerancePerLine As Integer
+    Public Function GetNumberOfSafeReports(reports As List(Of List(Of Integer)), tolerancePerLine As Integer) As Integer
         Dim safeReports = 0
 
+        _tolerancePerLine = tolerancePerLine
         For Each report In reports
+            _tolerancePerLine = tolerancePerLine
             If CheckIfReportSafe(report) Then
                 safeReports += 1
             End If

@@ -26,7 +26,7 @@ Module Program
 
         Dim analyzer As New ReportAnalyzer()
 
-        Dim numberOfSafeReports = analyzer.GetNumberOfSafeReports(list)
+        Dim numberOfSafeReports = analyzer.GetNumberOfSafeReports(list, 0)
 
         Console.WriteLine($"Safe reports: {numberOfSafeReports}")
     End Sub
