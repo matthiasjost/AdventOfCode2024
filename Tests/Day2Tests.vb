@@ -6,14 +6,12 @@ Namespace Tests
         <Fact>
         Sub TestIfSafe()
             ' Arrange
-            Dim reports()() As Integer
-
-            reports = New Integer()() {
-                New Integer() {7, 6, 4, 2, 1},
-                New Integer() {1, 2, 7, 8, 9},
-                New Integer() {1, 3, 2, 4, 5},
-                New Integer() {8, 6, 4, 4, 1},
-                New Integer() {1, 3, 6, 7, 9}
+            Dim reports As New List(Of List(Of Integer)) From {
+                New List(Of Integer) From {7, 6, 4, 2, 1},
+                New List(Of Integer) From {1, 2, 7, 8, 9},
+                New List(Of Integer) From {1, 3, 2, 4, 5},
+                New List(Of Integer) From {8, 6, 4, 4, 1},
+                New List(Of Integer) From {1, 3, 6, 7, 9}
             }
 
             ' Act
