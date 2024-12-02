@@ -1,5 +1,4 @@
 ﻿Public Class SimilarityCalculator
-
     Public Function CalculateSimilarity(leftList As List(Of Integer), rightList As List(Of Integer)) As Integer
         Dim similarityScore = 0
         For Each number In leftList
