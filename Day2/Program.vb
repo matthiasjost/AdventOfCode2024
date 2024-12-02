@@ -29,6 +29,10 @@ Module Program
         Dim numberOfSafeReports = analyzer.GetNumberOfSafeReports(list, 0)
 
         Console.WriteLine($"Safe reports: {numberOfSafeReports}")
+
+        Dim numberOfSafeReportsWithTolerance = analyzer.GetNumberOfSafeReports(list, 1)
+
+        Console.WriteLine($"Safe reports with tolerance: {numberOfSafeReportsWithTolerance}")
     End Sub
 
 End Module

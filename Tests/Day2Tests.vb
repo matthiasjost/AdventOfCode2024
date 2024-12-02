@@ -16,7 +16,7 @@ Namespace Tests
 
             ' Act
             Dim analyzer As New ReportAnalyzer()
-            Dim total = analyzer.GetNumberOfSafeReports(reports, 0)
+            Dim total = analyzer.GetNumberOfSafeReports(reports, False)
 
             ' Assert
             Assert.Equal(2, total)
@@ -36,10 +36,29 @@ Namespace Tests
 
             ' Act
             Dim analyzer As New ReportAnalyzer()
-            Dim total = analyzer.GetNumberOfSafeReports(reports, 1)
+            Dim total = analyzer.GetNumberOfSafeReports(reports, True)
 
             ' Assert
             Assert.Equal(4, total)
+
+        End Sub
+
+
+
+        <Fact>
+        Sub TestUnsafeWithToleranceUnsafe()
+            ' Arrange
+            Dim reports As New List(Of List(Of Integer)) From {
+                New List(Of Integer) From {1, 2, 7, 8, 9},
+                New List(Of Integer) From {9, 7, 6, 2, 1}
+            }
+
+            ' Act
+            Dim analyzer As New ReportAnalyzer()
+            Dim total = analyzer.GetNumberOfSafeReports(reports, 1)
+
+            ' Assert
+            Assert.Equal(0, total)
 
         End Sub
 
