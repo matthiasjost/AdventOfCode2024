@@ -46,9 +46,9 @@
 
     Private Function IsConstantlyIncreasing(report As List(Of Integer)) As Boolean
         Dim count = report _
-            .Zip(report _
-                 .Skip(1), Function(a, b) a < b) _
-                 .Count(Function(x) x)
+        .Zip(report _
+             .Skip(1), Function(a, b) a < b) _
+             .Count(Function(x) x)
 
         Return count >= (report.Count() - 1)
     End Function
@@ -56,21 +56,22 @@
 
     Private Function IsConstantlyDecreasing(report As List(Of Integer)) As Boolean
         Dim count = report _
-            .Zip(report _
-                 .Skip(1), Function(a, b) a > b) _
-                 .Count(Function(x) x)
+        .Zip(report _
+             .Skip(1), Function(a, b) a > b) _
+             .Count(Function(x) x)
 
         Return count >= (report.Count() - 1)
     End Function
 
     Private Function IsDistanceInAllowedRange(report As List(Of Integer)) As Boolean
         Dim count = report _
-            .Zip(report _
-                 .Skip(1),
-                 Function(a, b) Math.Abs(a - b) < 4) _
-                 .Count(Function(x) x)
+        .Zip(report _
+             .Skip(1),
+             Function(a, b) Math.Abs(a - b) < 4) _
+             .Count(Function(x) x)
 
         Return count >= (report.Count() - 1)
     End Function
 
 End Class
+

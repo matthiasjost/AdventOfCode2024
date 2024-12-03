@@ -1,6 +1,7 @@
 Imports System.IO
 
 Module Program
+
     Sub Main(args As String())
         Console.WriteLine("Day 1")
 
@@ -43,4 +44,6 @@ Module Program
 
 
     End Sub
+
 End Module
+

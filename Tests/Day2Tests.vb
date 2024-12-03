@@ -3,6 +3,7 @@ Imports Xunit
 
 Namespace Tests
     Public Class Day2Tests
+
         <Fact>
         Sub TestIfSafe()
             ' Arrange
@@ -43,8 +44,6 @@ Namespace Tests
 
         End Sub
 
-
-
         <Fact>
         Sub TestUnsafeWithToleranceUnsafe()
             ' Arrange
@@ -62,7 +61,6 @@ Namespace Tests
 
         End Sub
 
-
-
     End Class
+
 End Namespace

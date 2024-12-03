@@ -6,7 +6,7 @@ Namespace Tests
     Public Class Day3Tests
 
         <Fact>
-        Sub TestPart1()
+        Sub MultiplyPart1Test()
             ' Arrange
             Dim multiplier = New Multiplier()
 
@@ -18,7 +18,7 @@ Namespace Tests
         End Sub
 
         <Fact>
-        Sub TestPart2()
+        Sub MultiplyPart2Test()
             ' Arrange
             Dim multiplier = New Multiplier()
 
@@ -30,4 +30,5 @@ Namespace Tests
         End Sub
 
     End Class
+
 End Namespace

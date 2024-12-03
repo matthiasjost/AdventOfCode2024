@@ -2,6 +2,7 @@
 Imports Xunit
 
 Namespace Tests
+
     Public Class Day1Tests
         <Fact>
         Sub TestDistance()
@@ -16,7 +17,6 @@ Namespace Tests
 
         End Sub
 
-
         <Fact>
         Sub TestSimilarity()
             ' Arrange
@@ -27,5 +27,6 @@ Namespace Tests
             Assert.Equal(31, total)
         End Sub
     End Class
+
 End Namespace
 

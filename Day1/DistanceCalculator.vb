@@ -1,4 +1,5 @@
-﻿Public Class DistanceCalculator
+﻿
+Public Class DistanceCalculator
 
     Public Function CalculateDistance(leftList As List(Of Integer), rightList As List(Of Integer)) As Integer
 
@@ -15,4 +16,6 @@
         Return totalDistance
 
     End Function
+
 End Class
+
