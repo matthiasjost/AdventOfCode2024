@@ -1,77 +1,43 @@
 ﻿Public Class ReportAnalyzer
-    Public Function GetNumberOfSafeReports(reports As List(Of List(Of Integer)), allowOneLineRemoval As Integer) As Integer
-        Dim safeReports = 0
+
+    Public Function GetNumberOfSafeReports(reports As List(Of List(Of Integer)), allowOneLineRemoval As Boolean) As Integer
+        Dim safeReports As Integer = 0
 
         For Each report In reports
-
             If allowOneLineRemoval Then
-
-                Dim i = 0
-                Dim solutionFound = False
-                While i < report.Count AndAlso Not solutionFound
+                For i = 0 To report.Count - 1
                     Dim reducedReport = report.ToList()
                     reducedReport.RemoveAt(i)
-                    If CheckIfReportSafe(reducedReport) Then
+
+                    If IsReportSafe(reducedReport) Then
                         safeReports += 1
-                        solutionFound = True
+                        Exit For
                     End If
-
-                    i += 1
-                End While
-
+                Next
             Else
-                If CheckIfReportSafe(report) Then
+                If IsReportSafe(report) Then
                     safeReports += 1
                 End If
-
             End If
-
         Next
 
         Return safeReports
     End Function
 
-    Private Function CheckIfReportSafe(report As List(Of Integer)) As Boolean
-        If IsConstantlyIncreasing(report) OrElse IsConstantlyDecreasing(report) Then
-            If IsDistanceInAllowedRange(report) Then
-                Return True
-
-            End If
-
-        End If
-
-        Return False
-
+    Private Function IsReportSafe(report As List(Of Integer)) As Boolean
+        Return (IsIncreasing(report) OrElse IsDecreasing(report)) AndAlso IsDistanceAllowed(report)
     End Function
 
-    Private Function IsConstantlyIncreasing(report As List(Of Integer)) As Boolean
-        Dim count = report _
-        .Zip(report _
-             .Skip(1), Function(a, b) a < b) _
-             .Count(Function(x) x)
-
-        Return count >= (report.Count() - 1)
+    Private Function IsIncreasing(report As List(Of Integer)) As Boolean
+        Return report.Zip(report.Skip(1), Function(a, b) a < b).All(Function(x) x)
     End Function
 
-
-    Private Function IsConstantlyDecreasing(report As List(Of Integer)) As Boolean
-        Dim count = report _
-        .Zip(report _
-             .Skip(1), Function(a, b) a > b) _
-             .Count(Function(x) x)
-
-        Return count >= (report.Count() - 1)
+    Private Function IsDecreasing(report As List(Of Integer)) As Boolean
+        Return report.Zip(report.Skip(1), Function(a, b) a > b).All(Function(x) x)
     End Function
 
-    Private Function IsDistanceInAllowedRange(report As List(Of Integer)) As Boolean
-        Dim count = report _
-        .Zip(report _
-             .Skip(1),
-             Function(a, b) Math.Abs(a - b) < 4) _
-             .Count(Function(x) x)
-
-        Return count >= (report.Count() - 1)
+    Private Function IsDistanceAllowed(report As List(Of Integer)) As Boolean
+        Return report.Zip(report.Skip(1), Function(a, b) Math.Abs(a - b) < 4).All(Function(x) x)
     End Function
 
 End Class
-
