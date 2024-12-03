@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Tests</RootNamespace>
     <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -14,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Day1\Day1.vbproj" />
-    <ProjectReference Include="..\Day2\Day2.vbproj" />
-    <ProjectReference Include="..\Day3\Day3.vbproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
