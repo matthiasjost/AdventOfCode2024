@@ -3,9 +3,7 @@
 Public Class Multiplier
 
     Public Property Total As Integer
-
     Private _remainingText As String
-
     Private _enabled As Boolean = True
 
     Function Multiply(text As String) As Integer
@@ -49,7 +47,6 @@ Public Class Multiplier
 
         Dim firstNumber = Integer.Parse(match.Groups(1).Value)
         Dim secondNumber = Integer.Parse(match.Groups(2).Value)
-
 
         _remainingText = _remainingText.Substring(match.Index + match.Length)
         Return (firstNumber, secondNumber, True)
