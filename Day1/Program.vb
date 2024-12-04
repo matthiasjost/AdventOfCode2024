@@ -30,7 +30,6 @@ Module Program
                 isLeftList = Not isLeftList
             Next
 
-
         End While
 
         Dim calculator As New DistanceCalculator()
