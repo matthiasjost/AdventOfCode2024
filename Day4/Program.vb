@@ -13,7 +13,10 @@ Module Program
 
         Dim search = New Search()
         Dim total = search.FindXMas(list)
+        Console.WriteLine($"Total Part1: {total}")
 
-        Console.WriteLine($"Total {total}")
+        Dim searchPart2 = New Search()
+        Dim total2 = searchPart2.FindXMasPart2(list)
+        Console.WriteLine($"Total Part2: {total2}")
     End Sub
 End Module
