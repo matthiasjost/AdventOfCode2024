@@ -45,23 +45,50 @@ Public Class Search
         Return occurance
     End Function
 
-
     Function FindXMasPart2(rows As List(Of String)) As Integer
         Dim occurance = 0
         Dim rowCount = rows.Count
 
         For rowIndex = 0 To rowCount - 3
-            Dim row = rows(rowIndex)
-            Dim nextRow = rows(rowIndex + 1)
+            Dim firstRow = rows(rowIndex)
+            Dim middleRow = rows(rowIndex + 1)
             Dim endRow = rows(rowIndex + 2)
 
-            For columnIndex = 0 To row.Length - 3
+            For columnIndex = 0 To firstRow.Length - 3
 
-                If Regex.IsMatch(row.Substring(columnIndex, 3), "M.S|S.M|S.S|M.M") Then
-                    Dim needsStartWith As Char = If(row(columnIndex) = "M"c, "S"c, "M"c)
-                    Dim needsEndWith As Char = If(row(columnIndex + 2) = "M"c, "S"c, "M"c)
-                    If Regex.IsMatch(nextRow.Substring(columnIndex, 3), ".A.") Then
-                        Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
+                If Regex.IsMatch(firstRow.Substring(columnIndex, 3), "M.S|S.M|S.S|M.M") Then
+
+                    Dim endRowPattern = ""
+
+                    If Regex.IsMatch(firstRow.Substring(columnIndex, 3), "M.S") Then
+                        '.M.S.
+                        '..A..
+                        '.M.S.
+                        endRowPattern = "M.S"
+                    End If
+
+                    If Regex.IsMatch(firstRow.Substring(columnIndex, 3), "S.M") Then
+                        '.S.M.
+                        '..A..
+                        '.S.M.
+                        endRowPattern = "S.M"
+                    End If
+
+                    If Regex.IsMatch(firstRow.Substring(columnIndex, 3), "S.S") Then
+                        '.S.S.
+                        '..A..
+                        '.M.M.
+                        endRowPattern = "M.M"
+                    End If
+
+                    If Regex.IsMatch(firstRow.Substring(columnIndex, 3), "M.M") Then
+                        '.M.M.
+                        '..A..
+                        '.S.S.
+                        endRowPattern = "S.S"
+                    End If
+
+                    If Regex.IsMatch(middleRow.Substring(columnIndex, 3), ".A.") Then
                         If Regex.IsMatch(endRow.Substring(columnIndex, 3), endRowPattern) Then
                             occurance += 1
                         End If
