@@ -36,6 +36,22 @@ Namespace Tests
                                                                         ".........."})
             Assert.Equal(9, result)
         End Sub
+
+        <Fact>
+        Sub FindXMasTestPart2Test2()
+            Dim search = New Search()
+            Dim result = search.FindXMasPart2(New List(Of String) From {"xMxSxxxxxx",
+                                                                        "xxAxxMSMSx",
+                                                                        "xMxSxMAAxx",
+                                                                        "xxAxASMSMx",
+                                                                        "xMxSxMxxxx",
+                                                                        "xxxxxxxxxx",
+                                                                        "SxSxSxSxSx",
+                                                                        "xAxAxAxAxx",
+                                                                        "MxMxMxMxMx",
+                                                                        "xxxxxxxxxx"})
+            Assert.Equal(9, result)
+        End Sub
     End Class
 
 End Namespace

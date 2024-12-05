@@ -55,7 +55,8 @@ Public Class Search
                 Dim pattern = "M.S|S.M|S.S|M.M"
                 If c < (row.Count - 3) Then
                     Dim matches = Regex.Matches(row.Substring(c, 3), pattern)
-
+                    Dim needsEndWith As String = ""
+                    Dim needsStartWith As String = ""
                     If matches.Count = 0 Then
                         Continue For
                     End If
@@ -65,6 +66,24 @@ Public Class Search
                     If r + 2 >= rows.Count Then
                         Return occurance
                     End If
+
+                    If (matches(0).Value.StartsWith("M")) Then
+                        needsEndWith = "S"
+                    End If
+
+                    If (matches(0).Value.StartsWith("S")) Then
+                        needsEndWith = "M"
+                    End If
+
+
+                    If (matches(0).Value.EndsWith("M")) Then
+                        needsStartWith = "S"
+                    End If
+
+                    If (matches(0).Value.EndsWith("S")) Then
+                        needsStartWith = "M"
+                    End If
+
 
                     If firstRowIndex > -1 Then
                         ' search for the occurance of pattern in next line
@@ -81,7 +100,7 @@ Public Class Search
                         If secondRowIndex = firstRowIndex Then
                             ' search for the occurance of pattern in next line
                             Dim nextRow2 = rows(r + 2).Substring(c, 3)
-                            Dim nextPattern2 = "M.S|S.M|S.S|M.M"
+                            Dim nextPattern2 = $"{needsStartWith}.{needsEndWith}"
                             Dim nextMatches2 = Regex.Matches(nextRow2, nextPattern2)
 
                             If nextMatches2.Count = 0 Then
