@@ -49,73 +49,63 @@ Public Class Search
     Function FindXMasPart2(rows As List(Of String)) As Integer
         Dim occurance = 0
 
-        For r = 0 To rows.Count - 1
-            Dim row = rows(r)
-            For c = 0 To row.Length - 1
+        For rowIndex = 0 To rows.Count - 1
+
+            Dim row = rows(rowIndex)
+
+            For columnIndex = 0 To row.Length - 1
+
                 Dim pattern = "M.S|S.M|S.S|M.M"
-                If c < (row.Count - 3) Then
-                    Dim matches = Regex.Matches(row.Substring(c, 3), pattern)
-                    Dim needsEndWith As String = ""
-                    Dim needsStartWith As String = ""
-                    If matches.Count = 0 Then
-                        Continue For
-                    End If
 
-                    Dim firstRowIndex As Integer = matches(0).Index
+                If columnIndex < (row.Length - 3) Then
 
-                    If r + 2 >= rows.Count Then
-                        Return occurance
-                    End If
+                    Dim firstRowMatches = Regex.Matches(row.Substring(columnIndex, 3), pattern)
 
-                    If (matches(0).Value.StartsWith("M")) Then
-                        needsEndWith = "S"
-                    End If
+                    If firstRowMatches.Count > 0 Then
+                        Dim firstRowIndex As Integer = firstRowMatches(0).Index
+                        Dim needsEndWith As Char = ""
+                        Dim needsStartWith As Char = ""
 
-                    If (matches(0).Value.StartsWith("S")) Then
-                        needsEndWith = "M"
-                    End If
-
-
-                    If (matches(0).Value.EndsWith("M")) Then
-                        needsStartWith = "S"
-                    End If
-
-                    If (matches(0).Value.EndsWith("S")) Then
-                        needsStartWith = "M"
-                    End If
-
-
-                    If firstRowIndex > -1 Then
-                        ' search for the occurance of pattern in next line
-                        Dim nextRow = rows(r + 1).Substring(c, 3)
-                        Dim nextPattern = ".A."
-                        Dim nextMatches = Regex.Matches(nextRow, nextPattern)
-
-                        If nextMatches.Count = 0 Then
-                            Continue For
+                        If firstRowMatches(0).Value(0) = "M"c AndAlso firstRowMatches(0).Value(2) = "S"c Then
+                            needsStartWith = "S"c
+                            needsEndWith = "M"c
                         End If
 
-                        Dim secondRowIndex As Integer = nextMatches(0).Index
-                        ' check if second row index has correct offset
-                        If secondRowIndex = firstRowIndex Then
-                            ' search for the occurance of pattern in next line
-                            Dim nextRow2 = rows(r + 2).Substring(c, 3)
-                            Dim nextPattern2 = $"{needsStartWith}.{needsEndWith}"
-                            Dim nextMatches2 = Regex.Matches(nextRow2, nextPattern2)
+                        If firstRowMatches(0).Value(0) = "S"c AndAlso firstRowMatches(0).Value(2) = "M"c Then
+                            needsStartWith = "M"c
+                            needsEndWith = "S"c
+                        End If
 
-                            If nextMatches2.Count = 0 Then
-                                Continue For
-                            End If
+                        If firstRowMatches(0).Value(0) = "S"c AndAlso firstRowMatches(0).Value(2) = "S"c Then
+                            needsStartWith = "M"c
+                            needsEndWith = "M"c
+                        End If
 
-                            Dim thirdRowIndex As Integer = nextMatches2(0).Index
+                        If firstRowMatches(0).Value(0) = "M"c AndAlso firstRowMatches(0).Value(2) = "M"c Then
+                            needsStartWith = "S"c
+                            needsEndWith = "S"c
+                        End If
 
-                            If nextMatches2.Count = 0 Then
-                                Continue For
-                            End If
 
-                            ' check if third row index has correct offset
-                            If thirdRowIndex = firstRowIndex Then
-                                occurance += 1
+                        If firstRowIndex > -1 Then
+                            Dim nextRow = rows(rowIndex + 1).Substring(columnIndex, 3)
+                            Dim middleMatch = Regex.Matches(nextRow, ".A.")
+                            If middleMatch.Count > 0 Then
+                                Dim middleRowIndex As Integer = middleMatch(0).Index
+                                If middleRowIndex = firstRowIndex Then
+                                    Dim endRow = rows(rowIndex + 2).Substring(columnIndex, 3)
+                                    Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
+                                    Dim endRowMatches = Regex.Matches(endRow, endRowPattern)
+
+                                    If endRowMatches.Count > 0 Then
+
+                                        Dim endRowIndex As Integer = endRowMatches(0).Index
+
+                                        If endRowIndex = firstRowIndex Then
+                                            occurance += 1
+                                        End If
+                                    End If
+                                End If
                             End If
                         End If
                     End If
