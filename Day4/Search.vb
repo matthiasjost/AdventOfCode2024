@@ -48,59 +48,31 @@ Public Class Search
 
     Function FindXMasPart2(rows As List(Of String)) As Integer
         Dim occurance = 0
+        Dim rowCount = rows.Count
 
-        For rowIndex = 0 To rows.Count - 1
-
+        For rowIndex = 0 To rowCount - 3
             Dim row = rows(rowIndex)
+            Dim nextRow = rows(rowIndex + 1)
+            Dim endRow = rows(rowIndex + 2)
 
-            For columnIndex = 0 To row.Length - 1
+            For columnIndex = 0 To row.Length - 3
 
-                Dim pattern = "M.S|S.M|S.S|M.M"
-
-                If columnIndex < (row.Length - 3) Then
-
-                    Dim firstRowMatches = Regex.Matches(row.Substring(columnIndex, 3), pattern)
-
-                    If firstRowMatches.Count > 0 Then
-                        Dim firstRowIndex As Integer = firstRowMatches(0).Index
-
-                        Dim needsStartWith As Char = If(firstRowMatches(0).Value(0) = "M"c, "S"c, "M"c)
-                        Dim needsEndWith As Char = If(firstRowMatches(0).Value(2) = "M"c, "S"c, "M"c)
-
-                        If firstRowIndex > -1 Then
-                            Dim nextRow = rows(rowIndex + 1).Substring(columnIndex, 3)
-                            Dim middleMatches = Regex.Matches(nextRow, ".A.")
-                            If middleMatches.Count > 0 Then
-
-                                For Each middleMatch As Match In middleMatches
-
-                                    Dim middleRowIndex As Integer = middleMatch.Index
-
-                                    If middleRowIndex = firstRowIndex Then
-                                        Dim endRow = rows(rowIndex + 2).Substring(columnIndex, 3)
-                                        Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
-                                        Dim endRowMatches = Regex.Matches(endRow, endRowPattern)
-
-                                        If endRowMatches.Count > 0 Then
-
-                                            For Each match As Match In endRowMatches
-
-                                                Dim endRowIndex As Integer = match.Index
-                                                If endRowIndex = firstRowIndex Then
-                                                    occurance += 1
-                                                End If
-                                            Next
-                                        End If
-                                    End If
-                                Next
-                            End If
+                If Regex.IsMatch(row.Substring(columnIndex, 3), "M.S|S.M|S.S|M.M") Then
+                    Dim needsStartWith As Char = If(row(columnIndex) = "M"c, "S"c, "M"c)
+                    Dim needsEndWith As Char = If(row(columnIndex + 2) = "M"c, "S"c, "M"c)
+                    If Regex.IsMatch(nextRow.Substring(columnIndex, 3), ".A.") Then
+                        Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
+                        If Regex.IsMatch(endRow.Substring(columnIndex, 3), endRowPattern) Then
+                            occurance += 1
                         End If
                     End If
                 End If
             Next
         Next
+
         Return occurance
     End Function
+
 
     Public Function CountOccurrences(text As String, word As String) As Integer
         Dim parts() As String = Split(text, word)
