@@ -63,49 +63,36 @@ Public Class Search
 
                     If firstRowMatches.Count > 0 Then
                         Dim firstRowIndex As Integer = firstRowMatches(0).Index
-                        Dim needsEndWith As Char = ""
-                        Dim needsStartWith As Char = ""
 
-                        If firstRowMatches(0).Value(0) = "M"c AndAlso firstRowMatches(0).Value(2) = "S"c Then
-                            needsStartWith = "S"c
-                            needsEndWith = "M"c
-                        End If
-
-                        If firstRowMatches(0).Value(0) = "S"c AndAlso firstRowMatches(0).Value(2) = "M"c Then
-                            needsStartWith = "M"c
-                            needsEndWith = "S"c
-                        End If
-
-                        If firstRowMatches(0).Value(0) = "S"c AndAlso firstRowMatches(0).Value(2) = "S"c Then
-                            needsStartWith = "M"c
-                            needsEndWith = "M"c
-                        End If
-
-                        If firstRowMatches(0).Value(0) = "M"c AndAlso firstRowMatches(0).Value(2) = "M"c Then
-                            needsStartWith = "S"c
-                            needsEndWith = "S"c
-                        End If
-
+                        Dim needsStartWith As Char = If(firstRowMatches(0).Value(0) = "M"c, "S"c, "M"c)
+                        Dim needsEndWith As Char = If(firstRowMatches(0).Value(2) = "M"c, "S"c, "M"c)
 
                         If firstRowIndex > -1 Then
                             Dim nextRow = rows(rowIndex + 1).Substring(columnIndex, 3)
-                            Dim middleMatch = Regex.Matches(nextRow, ".A.")
-                            If middleMatch.Count > 0 Then
-                                Dim middleRowIndex As Integer = middleMatch(0).Index
-                                If middleRowIndex = firstRowIndex Then
-                                    Dim endRow = rows(rowIndex + 2).Substring(columnIndex, 3)
-                                    Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
-                                    Dim endRowMatches = Regex.Matches(endRow, endRowPattern)
+                            Dim middleMatches = Regex.Matches(nextRow, ".A.")
+                            If middleMatches.Count > 0 Then
 
-                                    If endRowMatches.Count > 0 Then
+                                For Each middleMatch As Match In middleMatches
 
-                                        Dim endRowIndex As Integer = endRowMatches(0).Index
+                                    Dim middleRowIndex As Integer = middleMatch.Index
 
-                                        If endRowIndex = firstRowIndex Then
-                                            occurance += 1
+                                    If middleRowIndex = firstRowIndex Then
+                                        Dim endRow = rows(rowIndex + 2).Substring(columnIndex, 3)
+                                        Dim endRowPattern = $"{needsStartWith}.{needsEndWith}"
+                                        Dim endRowMatches = Regex.Matches(endRow, endRowPattern)
+
+                                        If endRowMatches.Count > 0 Then
+
+                                            For Each match As Match In endRowMatches
+
+                                                Dim endRowIndex As Integer = match.Index
+                                                If endRowIndex = firstRowIndex Then
+                                                    occurance += 1
+                                                End If
+                                            Next
                                         End If
                                     End If
-                                End If
+                                Next
                             End If
                         End If
                     End If
