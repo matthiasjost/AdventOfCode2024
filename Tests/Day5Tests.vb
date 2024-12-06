@@ -44,7 +44,7 @@ Namespace Tests
             Dim middlePageTotal = sorter.SortPages(orderRules, pageUpdates)
 
             ' Assert
-            Assert.Equal(75, middlePageTotal)
+            Assert.Equal(143, middlePageTotal)
         End Sub
 
     End Class
