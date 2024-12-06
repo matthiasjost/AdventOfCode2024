@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Day2\Day2.vbproj" />
     <ProjectReference Include="..\Day3\Day3.vbproj" />
     <ProjectReference Include="..\Day4\Day4.vbproj" />
+    <ProjectReference Include="..\Day5\Day5.vbproj" />
   </ItemGroup>
 
 </Project>
