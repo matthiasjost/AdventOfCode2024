@@ -17,15 +17,21 @@ Module Program
         Dim pageUpdates As String = ""
 
         Dim updateLine = fileReader.ReadLine()
+
+
         While Not fileReader.EndOfStream
             pageUpdates &= updateLine & Environment.NewLine
             updateLine = fileReader.ReadLine()
         End While
 
+        pageUpdates &= updateLine & Environment.NewLine
 
-        Dim total = New PageUpdateSorter().SortPages(rules, pageUpdates)
+        ' Dim total = New PageUpdateSorter().SortPages(rules, pageUpdates)
+        ' Console.WriteLine($"Total: {total}")
 
-        Console.WriteLine($"Total: {total}")
+        Dim total2 As Integer = New PageUpdateSorterPart2().SortIncorrectPages(rules, pageUpdates)
+
+        Console.WriteLine($"Total2: {total2}")
 
     End Sub
 End Module
